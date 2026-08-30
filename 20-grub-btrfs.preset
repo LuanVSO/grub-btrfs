@@ -1,0 +1,2 @@
+# Regenerate grub-btrfs.cfg
+enable grub-btrfsd.service

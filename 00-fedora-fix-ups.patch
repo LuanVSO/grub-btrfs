@@ -1,0 +1,75 @@
+diff -Naur a/config b/config
+--- a/config	2025-09-17 02:41:59.000000000 -0300
++++ b/config	2026-08-30 19:27:21.484423593 -0300
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env bash
+ 
+ 
+-GRUB_BTRFS_VERSION=4.13-yabsnap_info_support-2024-03-06T13:43:57+00:00
++GRUB_BTRFS_VERSION=:{versiontag}:
+ 
+ # Disable grub-btrfs.
+ # Default: "false"
+@@ -9,7 +9,7 @@
+ 
+ # Name appearing in the Grub menu.
+ # Default: "Use distribution information from /etc/os-release."
+-#GRUB_BTRFS_SUBMENUNAME="Arch Linux snapshots"
++#GRUB_BTRFS_SUBMENUNAME="Fedora Linux snapshots"
+ 
+ # Custom title.
+ # Shows/Hides "date" "snapshot" "type" "description" in the Grub menu, custom order available.
+@@ -54,7 +54,7 @@
+ # For dracut based distros this could be useful to pass "rd.live.overlay.overlayfs=1"
+ # or "rd.live.overlay.readonly=1" to the Kernel for booting snapshots read only.
+ # Default: ""
+-#GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS="rd.live.overlay.overlayfs=1"
++GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS="rd.live.overlay.overlayfs=1"
+ 
+ # Comma separated mount options to be used when booting a snapshot.
+ # They can be defined here as well as in the "/" line inside the respective snapshots'
+@@ -100,7 +100,7 @@
+ # Location of the folder containing the "grub.cfg" file.
+ # Might be grub2 on some systems.
+ # Default: "/boot/grub"
+-#GRUB_BTRFS_GRUB_DIRNAME="/boot/grub2"
++GRUB_BTRFS_GRUB_DIRNAME="/boot/grub2"
+ 
+ # Location of kernels/initramfs/microcode.
+ # Use by "grub-btrfs" to detect the boot partition and the location of kernels/initrafms/microcodes.
+@@ -132,13 +132,13 @@
+ # For example, on Fedora : "/sbin/grub2-mkconfig"
+ # You can use only name or full path.
+ # Default: grub-mkconfig
+-#GRUB_BTRFS_MKCONFIG=/usr/bin/grub2-mkconfig
++GRUB_BTRFS_MKCONFIG=/usr/bin/grub2-mkconfig
+ 
+ # Name of grub-script-check command, use by "grub-btrfs"
+ # Might be 'grub2-script-check' on some systems (Fedora ...)
+ # For example, on Fedora : "grub2-script-check"
+ # Default: grub-script-check
+-#GRUB_BTRFS_SCRIPT_CHECK=grub2-script-check
++GRUB_BTRFS_SCRIPT_CHECK=grub2-script-check
+ 
+ # Path of grub-mkconfig_lib file, use by "grub-btrfs"
+ # Might be '/usr/share/grub2/grub-mkconfig_lib' on some systems (Opensuse ...)
+@@ -161,4 +161,4 @@
+ 
+ # Enable booting from snapshots stored on LUKS encrypted devices
+ # Default: "false"
+-#GRUB_BTRFS_ENABLE_CRYPTODISK="true"
++GRUB_BTRFS_ENABLE_CRYPTODISK="true"
+diff -Naur a/Makefile b/Makefile
+--- a/Makefile	2025-09-17 02:41:59.000000000 -0300
++++ b/Makefile	2026-08-30 19:27:38.918071309 -0300
+@@ -22,10 +22,6 @@
+ .PHONY: install uninstall clean help
+ 
+ install:
+-	@if test "$(shell id -u)" != 0; then \
+-		echo "You are not root, run this target as root please."; \
+-		exit 1; \
+-	fi
+ 	@echo "					     	   Installing "
+ 	@echo
+ 	@echo "       ::::::::  :::::::::  :::    ::: :::::::::               ::::::::: ::::::::::: :::::::::  :::::::::: ::::::::      "
