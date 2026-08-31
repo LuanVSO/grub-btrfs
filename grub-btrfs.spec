@@ -6,24 +6,23 @@
 Name:           grub-btrfs
 Version:        4.14^%{commitdate}git.%{shortcommit}
 Release:        %autorelease
-Summary:        grub-btrfs improves the grub bootloader by adding a btrfs snapshots sub-menu, allowing the user to boot into snapshots.
+Summary:        adds a btrfs snapshots sub-menu to grub
+License:        GPL-3.0-only
+URL:            https://github.com/Antynea/grub-btrfs
+Source0:        %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
+Source1:        10-grub-btrfs.conf
+Source2:        20-grub-btrfs.preset
+Patch0:         00-fedora-fix-ups.patch
 
-License:       GPL-3.0-only
-URL:           https://github.com/Antynea/grub-btrfs
-Source0:       %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
-Source1:       10-grub-btrfs.conf
-Source2:       20-grub-btrfs.preset
-Patch0:        00-fedora-fix-ups.patch
-
-BuildArch:     noarch
-BuildRequires: make
-BuildRequires: systemd-rpm-macros
-Requires:      btrfs-progs
-Requires:      grub2
-Requires:      bash
-Recommends:    snapper
-Recommends:    inotify-tools
-Enhances:      grub2
+BuildArch:      noarch
+BuildRequires:  make
+BuildRequires:  systemd-rpm-macros
+Requires:       btrfs-progs
+Requires:       grub2
+Requires:       bash
+Recommends:     snapper
+Recommends:     inotify-tools
+Enhances:       grub2
 
 %description
 grub-btrfs improves the grub bootloader by adding a btrfs snapshots sub-menu,
