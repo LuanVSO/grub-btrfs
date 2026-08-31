@@ -15,7 +15,12 @@ Source0:        %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
 Source1:        10-grub-btrfs.conf
 # not possible to enable grub-btrfsd.service via preset yet because snapper requires manual intervention to enable / snapshots
 #Source2:        20-grub-btrfs.preset
-Patch0:         00-fedora-fix-ups.patch
+
+# fedora specific paths, commands and options
+Patch0:         00-fedora-config-options.patch
+# allow non-root install if destdir is set.
+# https://github.com/Antynea/grub-btrfs/pull/445
+Patch1:         01-ignore-root-check-with-destdir.patch
 
 BuildArch:      noarch
 BuildRequires:  make
