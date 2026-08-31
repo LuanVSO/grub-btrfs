@@ -11,7 +11,7 @@ License:        GPL-3.0-only
 URL:            https://github.com/Antynea/grub-btrfs
 Source0:        %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
 Source1:        10-grub-btrfs.conf
-Source2:        20-grub-btrfs.preset
+#Source2:        20-grub-btrfs.preset
 Patch0:         00-fedora-fix-ups.patch
 
 BuildArch:      noarch
@@ -40,7 +40,7 @@ created snapshots.
 %make_install SYSTEMD=true GRUB_UPDATE_EXCLUDE=true
 mkdir -p %{buildroot}%{dracutlibdir}/dracut.conf.d
 install -Dm0644 %{SOURCE1} %{buildroot}%{dracutlibdir}/dracut.conf.d/10-grub-btrfs.conf
-install -Dm0644 %{SOURCE2} %{buildroot}%{_presetdir}/20-grub-btrfs.preset
+#install -Dm0644 {SOURCE2} {buildroot}{_presetdir}/20-grub-btrfs.preset
 
 %post
 %systemd_post grub-btrfsd.service
@@ -71,7 +71,7 @@ fi
 %attr(0755,root,root) %{_bindir}/grub-btrfsd
 %attr(0644,root,root) %{_unitdir}/grub-btrfsd.service
 %attr(0644,root,root) %ghost %config(noreplace) /boot/grub2/grub-btrfs.cfg
-%{_presetdir}/20-grub-btrfs.preset
+#{_presetdir}/20-grub-btrfs.preset
 %{dracutlibdir}/dracut.conf.d/10-grub-btrfs.conf
 
 %changelog
