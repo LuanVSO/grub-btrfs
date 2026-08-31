@@ -1,20 +1,22 @@
 %define dracutlibdir %{_prefix}/lib/dracut
+%global commit 38cd2fa419e4c1c0f1e345a374b37c040c170047
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global commitdate 20260824
 
 Name:           grub-btrfs
-Version:        4.14
+Version:        4.14^%{commitdate}git.%{shortcommit}
 Release:        1%{?dist}
 Summary:        grub-btrfs improves the grub bootloader by adding a btrfs snapshots sub-menu, allowing the user to boot into snapshots.
 
 License:       GPL-3.0-only
 URL:           https://github.com/Antynea/grub-btrfs
-Source0:       %{url}/archive/refs/tags/v%{version}.tar.gz
+Source0:       %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
 Source1:       10-grub-btrfs.conf
 Source2:       20-grub-btrfs.preset
 Patch0:        00-fedora-fix-ups.patch
 
 BuildArch:     noarch
 BuildRequires: make
-BuildRequires: sed
 BuildRequires: systemd-rpm-macros
 Requires:      btrfs-progs
 Requires:      grub2
@@ -31,8 +33,7 @@ If you wish to use read-only snapshots, /var/log or even /var must be on a separ
 This project includes its own solution. Refer to the documentation
 
 %prep
-%autosetup -p1
-sed -i "s/:{versiontag}:/%{version}-%{release}/g" config
+%autosetup -p1 -n %{name}-%{commit}
 
 %build
 
@@ -55,7 +56,7 @@ install -Dm0644 %{SOURCE2} %{buildroot}%{_presetdir}/20-grub-btrfs.preset
 if [ $1 -eq 1 ]; then
     [ -x %{_sbindir}/dracut ] && %{_sbindir}/dracut -f || :
     [ -x %{_sbindir}/grub2-mkconfig ] && \
-        %{_sbindir}/grub2-mkconfig -o /boot/grub2/grub.cfg || :
+        %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg || :
 fi
 
 %files
