@@ -6,7 +6,7 @@
 Name:           grub-btrfs
 Version:        4.14^%{commitdate}git.%{shortcommit}
 Release:        %autorelease
-Summary:        adds a btrfs snapshots sub-menu to grub
+Summary:        Adds a btrfs snapshots sub-menu to grub
 License:        GPL-3.0-only
 URL:            https://github.com/Antynea/grub-btrfs
 Source0:        %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
@@ -50,7 +50,6 @@ install -Dm0644 %{SOURCE2} %{buildroot}%{_presetdir}/20-grub-btrfs.preset
 %postun
 %systemd_postun grub-btrfsd.service
  %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg || :
- rm /boot/grub2/grub-btrfs.cfg || :
 
 %posttrans
 if [ $1 -eq 1 ]; then
@@ -63,15 +62,16 @@ fi
 %files
 %license LICENSE
 %doc README.md
-%dir %{_sysconfdir}/default/grub-btrfs
-%config %{_sysconfdir}/default/grub-btrfs/config
-%{_sysconfdir}/grub.d/41_snapshots-btrfs
-%{_bindir}/grub-btrfsd
 %{_docdir}/grub-btrfs/initramfs-overlayfs.md
 %{_mandir}/man8/grub-btrfs{,d}.8*
-%{_unitdir}/grub-btrfsd.service
+%attr(0700,root,root) %dir %{_sysconfdir}/default/grub-btrfs
+%config(noreplace) %{_sysconfdir}/default/grub-btrfs/config
+%attr(0755,root,root) %config %{_sysconfdir}/grub.d/41_snapshots-btrfs
+%attr(0755,root,root) %{_bindir}/grub-btrfsd
+%attr(0644,root,root) %{_unitdir}/grub-btrfsd.service
+%attr(0644,root,root) %ghost %config(noreplace) /boot/grub2/grub-btrfs.cfg
 %{_presetdir}/20-grub-btrfs.preset
-
 %{dracutlibdir}/dracut.conf.d/10-grub-btrfs.conf
 
+%changelog
 %autochangelog
