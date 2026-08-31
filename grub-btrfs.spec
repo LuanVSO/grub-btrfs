@@ -21,7 +21,7 @@ BuildRequires:  coreutils
 Requires:       btrfs-progs
 Requires:       grub2
 Requires:       bash
-Recommends:     snapper
+Recommends:     snapper or timeshift
 Recommends:     inotify-tools
 Enhances:       grub2
 
