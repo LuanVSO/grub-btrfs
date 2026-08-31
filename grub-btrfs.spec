@@ -42,6 +42,15 @@ mkdir -p %{buildroot}%{dracutlibdir}/dracut.conf.d
 install -Dm0644 %{SOURCE1} %{buildroot}%{dracutlibdir}/dracut.conf.d/10-grub-btrfs.conf
 install -Dm0644 %{SOURCE2} %{buildroot}%{_presetdir}/20-grub-btrfs.preset
 
+%post
+%systemd_post grub-btrfsd.service
+
+%preun
+%systemd_preun grub-btrfsd.service
+
+%postun
+%systemd_postun grub-btrfsd.service
+
 %posttrans
 if [ $1 -eq 1 ]; then
     [ -x %{_sbindir}/dracut ] && %{_sbindir}/dracut -f || :
@@ -54,7 +63,6 @@ fi
 %doc README.md
 %dir %{_sysconfdir}/default/grub-btrfs
 %config %{_sysconfdir}/default/grub-btrfs/config
-%dir %{_sysconfdir}/grub.d
 %{_sysconfdir}/grub.d/41_snapshots-btrfs
 %{_bindir}/grub-btrfsd
 %{_docdir}/grub-btrfs/initramfs-overlayfs.md
@@ -62,7 +70,6 @@ fi
 %{_unitdir}/grub-btrfsd.service
 %{_presetdir}/20-grub-btrfs.preset
 
-%dir %{dracutlibdir}/dracut.conf.d
 %{dracutlibdir}/dracut.conf.d/10-grub-btrfs.conf
 
 %changelog
