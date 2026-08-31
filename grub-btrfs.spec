@@ -65,7 +65,7 @@ fi
 %files
 %license LICENSE
 %doc README.md
-%{_docdir}/grub-btrfs/initramfs-overlayfs.md
+%{_pkgdocdir}/initramfs-overlayfs.md
 %{_mandir}/man8/grub-btrfs{,d}.8*
 %attr(0700,root,root) %dir %{_sysconfdir}/default/grub-btrfs
 %config(noreplace) %{_sysconfdir}/default/grub-btrfs/config
