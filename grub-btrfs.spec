@@ -26,11 +26,10 @@ Recommends:    inotify-tools
 Enhances:      grub2
 
 %description
-grub-btrfs improves the grub bootloader by adding a btrfs snapshots sub-menu, allowing the user to boot into snapshots.
-grub-btrfs supports manual snapshots as well as snapper, timeshift, and yabsnap created snapshots.
-Warning: booting read-only snapshots can be tricky
-If you wish to use read-only snapshots, /var/log or even /var must be on a separate subvolume. Otherwise, make sure your snapshots are writable. See this ticket for more info.
-This project includes its own solution. Refer to the documentation
+grub-btrfs improves the grub bootloader by adding a btrfs snapshots sub-menu,
+allowing the user to boot into snapshots.
+grub-btrfs supports manual snapshots as well as snapper, timeshift, and yabsnap
+created snapshots.
 
 %prep
 %autosetup -p1 -n %{name}-%{commit}
