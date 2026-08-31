@@ -17,6 +17,7 @@ Patch0:         00-fedora-fix-ups.patch
 BuildArch:      noarch
 BuildRequires:  make
 BuildRequires:  systemd-rpm-macros
+BuildRequires:  coreutils
 Requires:       btrfs-progs
 Requires:       grub2
 Requires:       bash
