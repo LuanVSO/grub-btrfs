@@ -51,12 +51,13 @@ install -Dm0644 %{SOURCE2} %{buildroot}%{_presetdir}/20-grub-btrfs.preset
 
 %postun
 %systemd_postun grub-btrfsd.service
+ %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg || :
+ rm /boot/grub2/grub-btrfs.cfg || :
 
 %posttrans
 if [ $1 -eq 1 ]; then
-    [ -x %{_sbindir}/dracut ] && %{_sbindir}/dracut -f || :
-    [ -x %{_sbindir}/grub2-mkconfig ] && \
-        %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg || :
+    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg || :
+    %{_sbindir}/dracut -f || :
 fi
 
 %files
