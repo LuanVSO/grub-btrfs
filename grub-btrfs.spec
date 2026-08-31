@@ -5,7 +5,7 @@
 
 Name:           grub-btrfs
 Version:        4.14^%{commitdate}git.%{shortcommit}
-Release:        1%{?dist}
+Release:        %autorelease
 Summary:        grub-btrfs improves the grub bootloader by adding a btrfs snapshots sub-menu, allowing the user to boot into snapshots.
 
 License:       GPL-3.0-only
@@ -56,9 +56,11 @@ install -Dm0644 %{SOURCE2} %{buildroot}%{_presetdir}/20-grub-btrfs.preset
 
 %posttrans
 if [ $1 -eq 1 ]; then
-    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg || :
+    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg >/dev/null || :
     %{_sbindir}/dracut -f || :
 fi
+
+%check
 
 %files
 %license LICENSE
@@ -74,6 +76,4 @@ fi
 
 %{dracutlibdir}/dracut.conf.d/10-grub-btrfs.conf
 
-%changelog
-* Sun Aug 30 2026 Luan Vitor Simião oliveira <luanv.oliveira@outlook.com>
-- initial package
+%autochangelog
