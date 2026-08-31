@@ -63,12 +63,12 @@ install -pDm0644 %{SOURCE1} %{buildroot}%{dracutlibdir}/dracut.conf.d/10-grub-bt
 %postun
 %systemd_postun grub-btrfsd.service
  if [ $1 -eq 0 ]; then
-    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg >/dev/null || :
+    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg 2>/dev/null || :
  fi
 
 %posttrans
 if [ $1 -eq 1 ]; then
-    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg >/dev/null || :
+    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg 2>/dev/null || :
     %{_sbindir}/dracut -f || :
 fi
 
