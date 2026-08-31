@@ -21,7 +21,7 @@ BuildRequires:  coreutils
 Requires:       btrfs-progs
 Requires:       grub2
 Requires:       bash
-Recommends:     snapper or timeshift
+Recommends:     (snapper or timeshift)
 Recommends:     inotify-tools
 Enhances:       grub2
 
@@ -50,7 +50,9 @@ install -Dm0644 %{SOURCE1} %{buildroot}%{dracutlibdir}/dracut.conf.d/10-grub-btr
 
 %postun
 %systemd_postun grub-btrfsd.service
- %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg || :
+ if [ $1 -eq 0 ]; then
+    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg >/dev/null || :
+ fi
 
 %posttrans
 if [ $1 -eq 1 ]; then
