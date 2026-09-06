@@ -1,4 +1,4 @@
-%define dracutlibdir %{_prefix}/lib/dracut
+%global dracutlibdir %{_prefix}/lib/dracut
 
 # git snapshot because last tagged release couldn't detect snapper snapshots during testing
 %global commit 38cd2fa419e4c1c0f1e345a374b37c040c170047
@@ -28,12 +28,11 @@ BuildRequires:  systemd-rpm-macros
 BuildRequires:  coreutils
 BuildRequires:  sed
 Requires:       btrfs-progs
-Requires:       grub2
+Requires:       grub2-common
 Requires:       dracut
-Requires:       bash
 Recommends:     (snapper or timeshift)
 Recommends:     inotify-tools
-Enhances:       grub2
+Enhances:       grub2-common
 
 %description
 grub-btrfs improves the grub bootloader by adding a btrfs snapshots sub-menu,
@@ -42,7 +41,7 @@ grub-btrfs supports manual snapshots as well as snapper, timeshift, and yabsnap
 created snapshots.
 
 %prep
-%autosetup -p1 -n %{name}-%{commit}
+%autosetup -C -p1
 # uneeded shebang line in config file, remove it to avoid warnings
 sed -i '1d' config
 
@@ -84,7 +83,7 @@ fi
 
 # this script is the main entry point for grub-btrfs, and is called by grub2-mkconfig
 # upgrading without overwriting this file is not recommended, as it may break grub-btrfs functionality
-%attr(0755,root,root) %config %{_sysconfdir}/grub.d/41_snapshots-btrfs
+%attr(0755,root,root) %{_sysconfdir}/grub.d/41_snapshots-btrfs
 
 %attr(0755,root,root) %{_bindir}/grub-btrfsd
 %attr(0644,root,root) %{_unitdir}/grub-btrfsd.service
