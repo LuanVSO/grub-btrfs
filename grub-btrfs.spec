@@ -6,14 +6,14 @@
 %global commitdate 20260824
 
 Name:           grub-btrfs
-Version:        4.14^%{commitdate}git.%{shortcommit}
+Version:        4.14^%{commitdate}.git%{shortcommit}
 Release:        %autorelease
 Summary:        Adds a btrfs snapshots sub-menu to grub
 License:        GPL-3.0-only
 URL:            https://github.com/Antynea/grub-btrfs
 Source0:        %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
 Source1:        10-grub-btrfs.conf
-# not possible to enable grub-btrfsd.service via preset yet because snapper requires manual intervention to enable / snapshots
+# not possible to enable grub-btrfsd.service via preset yet because snapper requires manual intervention to enable root snapshots
 #Source2:        20-grub-btrfs.preset
 
 # fedora specific paths, commands and options
