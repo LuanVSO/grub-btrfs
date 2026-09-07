@@ -79,15 +79,15 @@ fi
 %doc README.md
 %{_pkgdocdir}/initramfs-overlayfs.md
 %{_mandir}/man8/grub-btrfs{,d}.8*
-%attr(0700,root,root) %dir %{_sysconfdir}/default/grub-btrfs
+%dir %{_sysconfdir}/default/grub-btrfs
 %config(noreplace) %{_sysconfdir}/default/grub-btrfs/config
 
 # this script is the main entry point for grub-btrfs, and is called by grub2-mkconfig
 # upgrading without overwriting this file is not recommended, as it may break grub-btrfs functionality
-%attr(0755,root,root) %{_sysconfdir}/grub.d/41_snapshots-btrfs
+%{_sysconfdir}/grub.d/41_snapshots-btrfs
 
+%{_unitdir}/grub-btrfsd.service
 %attr(0755,root,root) %{_bindir}/grub-btrfsd
-%attr(0644,root,root) %{_unitdir}/grub-btrfsd.service
 %attr(0644,root,root) %ghost %config(noreplace) /boot/grub2/grub-btrfs.cfg
 #{_presetdir}/20-grub-btrfs.preset
 %{dracutlibdir}/dracut.conf.d/10-grub-btrfs.conf
