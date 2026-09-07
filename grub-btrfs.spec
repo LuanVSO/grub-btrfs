@@ -9,6 +9,7 @@ Name:           grub-btrfs
 Version:        4.14^%{commitdate}.git%{shortcommit}
 Release:        %autorelease
 Summary:        Adds a btrfs snapshots sub-menu to grub
+# https://github.com/Antynea/grub-btrfs/issues/313
 License:        GPL-3.0-only
 URL:            https://github.com/Antynea/grub-btrfs
 Source0:        %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
