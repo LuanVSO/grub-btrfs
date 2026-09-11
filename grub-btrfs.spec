@@ -15,7 +15,6 @@ URL:            https://github.com/Antynea/grub-btrfs
 Source0:        %{url}/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
 Source1:        10-grub-btrfs.conf
 # not possible to enable grub-btrfsd.service via preset yet because snapper requires manual intervention to enable root snapshots
-#Source2:        20-grub-btrfs.preset
 
 # fedora specific paths, commands and options
 Patch0:         00-fedora-config-options.patch
@@ -31,6 +30,9 @@ BuildRequires:  sed
 Requires:       btrfs-progs
 Requires:       grub2-common
 Requires:       dracut
+Requires(post): dracut
+Requires(post): grub2-tools
+
 Recommends:     (snapper or timeshift)
 Recommends:     inotify-tools
 Enhances:       grub2-common
@@ -52,25 +54,24 @@ sed -i '1d' config
 %make_install SYSTEMD=true GRUB_UPDATE_EXCLUDE=true
 mkdir -p %{buildroot}%{dracutlibdir}/dracut.conf.d
 install -pDm0644 %{SOURCE1} %{buildroot}%{dracutlibdir}/dracut.conf.d/10-grub-btrfs.conf
-#install -pDm0644 {SOURCE2} {buildroot}{_presetdir}/20-grub-btrfs.preset
 
 %post
 %systemd_post grub-btrfsd.service
+if [ -x %{_sbindir}/dracut ] && [ -e /boot/vmlinuz-$(uname -r) ]; then
+    %{_sbindir}/dracut -f --kver "$(uname -r)" || :
+fi
+
+if [ -x /usr/sbin/grub2-mkconfig ]; then
+    if [ -L /etc/grub2.cfg ] || [ -f /etc/grub2.cfg ]; then
+        /usr/sbin/grub2-mkconfig -o "$(readlink -f /etc/grub2.cfg)" || :
+    fi
+fi
 
 %preun
 %systemd_preun grub-btrfsd.service
 
 %postun
 %systemd_postun grub-btrfsd.service
- if [ $1 -eq 0 ]; then
-    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg 2>/dev/null || :
- fi
-
-%posttrans
-if [ $1 -eq 1 ]; then
-    %{_sbindir}/grub2-mkconfig -o /etc/grub2.cfg 2>/dev/null || :
-    %{_sbindir}/dracut -f || :
-fi
 
 %check
 
