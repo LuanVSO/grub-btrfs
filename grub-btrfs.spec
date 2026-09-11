@@ -77,7 +77,7 @@ fi
 
 %check
 shellcheck -S error -s bash %{buildroot}%{_sysconfdir}/grub.d/41_snapshots-btrfs %{buildroot}%{_sysconfdir}/default/grub-btrfs/config
-
+shellcheck -S error -s bash %{buildroot}%{_bindir}/grub-btrfsd
 %files
 %license LICENSE
 %doc README.md
