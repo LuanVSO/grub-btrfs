@@ -27,6 +27,8 @@ BuildRequires:  make
 BuildRequires:  systemd-rpm-macros
 BuildRequires:  coreutils
 BuildRequires:  sed
+BuildRequires:  ShellCheck
+
 Requires:       btrfs-progs
 Requires:       grub2-common
 Requires:       dracut
@@ -74,6 +76,7 @@ fi
 %systemd_postun grub-btrfsd.service
 
 %check
+shellcheck -S error -s bash %{buildroot}%{_sysconfdir}/grub.d/41_snapshots-btrfs %{buildroot}%{_sysconfdir}/default/grub-btrfs/config
 
 %files
 %license LICENSE
