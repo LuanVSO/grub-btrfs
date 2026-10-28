@@ -2,7 +2,7 @@
 
 # git snapshot because last tagged release couldn't detect snapper snapshots during testing
 %global commit 38cd2fa419e4c1c0f1e345a374b37c040c170047
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global shortcommit %{sub %commit 0 7}
 %global commitdate 20260824
 
 Name:           grub-btrfs
